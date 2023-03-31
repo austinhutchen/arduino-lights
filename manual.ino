@@ -1,6 +1,11 @@
 //www.elegoo.com
 //2016.12.08
+#include <Servo.h>
 
+Servo myservo;  // create servo object to control a servo
+// twelve servo objects can be created on most boards
+
+int pos = 0;    // variable to store the servo position
 int ledPin = 5;
 int buttonApin = 9;
 int buttonBpin = 8;
@@ -12,6 +17,8 @@ byte leds = 0;
 
 void setup() 
 {
+    Serial.begin(9600);
+  myservo.attach(6);  // attaches the servo on pin 9 to the servo object
   pinMode(ledPin, OUTPUT);
   pinMode(buttonApin, INPUT_PULLUP);  
   pinMode(buttonBpin, INPUT_PULLUP);  
@@ -28,11 +35,20 @@ void loop()
   // define variables
 int redValue;
 int greenValue;
-int blueValue;Ï
+int blueValue;
 
   if (digitalRead(buttonApin) == LOW)
   {
 
+ for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
 redValue = 255; // choose a value between 1 and 255 to change the color.
 greenValue = 0;
 blueValue = 0;
@@ -99,5 +115,3 @@ delay(delayTime);
 
 
                 
-
-
